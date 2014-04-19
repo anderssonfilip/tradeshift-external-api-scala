@@ -16,7 +16,7 @@ object ClientBuild extends Build {
   )
 
   lazy val json = project.in(
-    //file("json.lift")
-    file("json.spray")
+    file("json.lift")
+    //file("json.spray")
   )
 }

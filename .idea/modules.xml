@@ -5,7 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/client.iml" filepath="$PROJECT_DIR$/.idea_modules/client.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/client-build.iml" filepath="$PROJECT_DIR$/.idea_modules/client-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/http.iml" filepath="$PROJECT_DIR$/.idea_modules/http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/http-build.iml" filepath="$PROJECT_DIR$/.idea/modules/http-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/json.iml" filepath="$PROJECT_DIR$/.idea_modules/json.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/json-build.iml" filepath="$PROJECT_DIR$/.idea/modules/json-build.iml" />
     </modules>
   </component>
 </project>

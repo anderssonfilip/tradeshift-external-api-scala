@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
+<module external.linked.project.path="$MODULE_DIR$/../http.dispatch" external.root.project.path="$MODULE_DIR$/.." external.system.id="SBT" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="scala" name="Scala">
       <configuration>
         <option name="compilerLibraryLevel" value="Project" />
-        <option name="compilerLibraryName" value="SBT: scala:2.10.4" />
+        <option name="compilerLibraryName" value="SBT:: scala-compiler-bundle:2.10.4" />
         <option name="fsc" value="true" />
       </configuration>
     </facet>
@@ -15,11 +15,15 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../http.dispatch">
       <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/main/scala" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/target/scala-2.10/src_managed/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/target/scala-2.10/src_managed/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/test/scala" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/test/resources" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/target/scala-2.10/resource_managed/main" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../http.dispatch/target/scala-2.10/resource_managed/test" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../http.dispatch/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -29,6 +33,7 @@
     <orderEntry type="library" name="SBT: com.ning:async-http-client:1.7.16" level="project" />
     <orderEntry type="library" name="SBT: io.netty:netty:3.6.3.Final" level="project" />
     <orderEntry type="library" name="SBT: org.slf4j:slf4j-api:1.6.2" level="project" />
+    <orderEntry type="library" name="scala-reflect" level="project" />
   </component>
 </module>
 
