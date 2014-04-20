@@ -33,7 +33,7 @@
     <orderEntry type="library" name="SBT: com.ning:async-http-client:1.7.16" level="project" />
     <orderEntry type="library" name="SBT: io.netty:netty:3.6.3.Final" level="project" />
     <orderEntry type="library" name="SBT: org.slf4j:slf4j-api:1.6.2" level="project" />
-    <orderEntry type="library" name="scala-reflect" level="project" />
+    <orderEntry type="module" module-name="container" />
   </component>
 </module>
 

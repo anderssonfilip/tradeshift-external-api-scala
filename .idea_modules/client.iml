@@ -35,11 +35,13 @@
     <orderEntry type="library" name="SBT: org.slf4j:slf4j-api:1.6.2" level="project" />
     <orderEntry type="library" name="SBT: net.liftweb:lift-json_2.10:2.5.1" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scalap:2.10.0" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-compiler:2.10.0" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.10.0" level="project" />
     <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.4.1" level="project" />
     <orderEntry type="module" module-name="http" />
     <orderEntry type="module" module-name="json" />
+    <orderEntry type="module" module-name="container" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.10.4" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-compiler:2.10.0" level="project" />
+    <orderEntry type="library" name="SBT: com.typesafe:config:1.2.0" level="project" />
   </component>
 </module>
 

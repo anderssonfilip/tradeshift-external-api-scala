@@ -4,6 +4,18 @@
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/container" />
+            <option value="$PROJECT_DIR$/container/project" />
+            <option value="$PROJECT_DIR$/http.dispatch" />
+            <option value="$PROJECT_DIR$/http.dispatch/project" />
+            <option value="$PROJECT_DIR$/json.lift" />
+            <option value="$PROJECT_DIR$/json.lift/project" />
+            <option value="$PROJECT_DIR$/project" />
+          </set>
+        </option>
         <option name="useAutoImport" value="true" />
       </SbtProjectSettings>
     </option>
