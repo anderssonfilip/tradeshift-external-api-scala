@@ -9,8 +9,6 @@ case class TsAccountInfo(companyName: String,
                          lookingFor: List[String],
                          offering: List[String],
                          isPublicProfile: Boolean,
-                         created: java.time.LocalDateTime
+                         created: java.util.Date
                           ) {
-
-
 }
