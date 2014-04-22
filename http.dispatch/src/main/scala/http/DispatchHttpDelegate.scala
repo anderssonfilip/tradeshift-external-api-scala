@@ -4,12 +4,20 @@ import dispatch._, Defaults._
 import dispatch.oauth._
 import com.ning.http.client.oauth.{RequestToken, ConsumerKey}
 
-
 import container._
 import com.ning.http.client.Response
 
 
 class DispatchHttpDelegate(base: String) extends HttpDelegate {
+
+  override def doDelete(request: HttpRequest): Future[Int] = {
+
+    val svc = url(base + request.path).DELETE
+
+    println((prep(svc, request)).toRequest.toString)
+
+    Http(prep(svc, request)).map(r => r.getStatusCode)
+  }
 
   override def doGet(request: HttpRequest): Future[(Int, String)] = {
 

@@ -1,4 +1,4 @@
-import container.{TsDocument, TsAddress}
+import container.{TsDocumentInfo, TsAddress}
 import java.text.SimpleDateFormat
 import json.LiftHttpResponse
 import org.scalatest._
@@ -221,9 +221,9 @@ class TestLift extends FlatSpec with Matchers {
   } ]
   }"""
 
-    val w = new LiftHttpResponse[List[TsDocument]](Future[(Int, String)]((200, json)))
+    val w = new LiftHttpResponse[List[TsDocumentInfo]](Future[(Int, String)]((200, json)))
 
-    val documents = cast[List[TsDocument]](w.create)
+    val documents = cast[List[TsDocumentInfo]](w.create)
 
     (documents.length) should be(2)
     (documents.tail.head.documentId) should be("c92268ac-00c2-47ff-8ef8-4a1fb2cfeed7")

@@ -1,1 +1,4 @@
 src/main/resources/TsCredentials.conf
+http.dispatch/src/test/resources/TsCredentials.conf
+*.class
+*.cache

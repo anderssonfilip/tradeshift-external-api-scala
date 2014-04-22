@@ -29,30 +29,32 @@ object TsBootstrapper extends App {
 
   httpDelegate.sign(consumerKey, consumerSecret, token, tokenSecret)
 
-  val req = new HttpRequest("documents")
+
+  val connectionId = "5824e12e-e4aa-4c8d-97dc-f84703df9b73"
+  val req = new HttpRequest("network/connections/" + connectionId)
   req.addHeader("User-Agent", "tradesshift-external-api-scala/0.1")
   req.addHeader("Accept", "application/json")
   req.addHeader("X-Tradeshift-TenantId", tenantId)
 
   val response: Future[(Int, String)] = httpDelegate.doGet(req)
-  val w= new LiftHttpResponse[List[TsDocument]](response)
+  val w = new LiftHttpResponse[TsConnectionDetail](response)
 
-  val accountInfo = cast[List[TsDocument]](w.create)
+  val result = cast[TsConnectionDetail](w.create)
 
-  println(accountInfo)
+  println(result)
 
-/*
-  val req = new HttpRequest("account/info")
-  req.addHeader("User-Agent", "tradesshift-external-api-scala/0.1")
-  req.addHeader("Accept", "application/json")
-  req.addHeader("X-Tradeshift-TenantId", tenantId)
+  /*
+    val req = new HttpRequest("account/info")
+    req.addHeader("User-Agent", "tradesshift-external-api-scala/0.1")
+    req.addHeader("Accept", "application/json")
+    req.addHeader("X-Tradeshift-TenantId", tenantId)
 
-  val response: Future[(Int, String)] = httpDelegate.doGet(req)
-  val w: HttpResponse[TsAccountInfo] = new LiftHttpResponse[TsAccountInfo](response)
+    val response: Future[(Int, String)] = httpDelegate.doGet(req)
+    val w: HttpResponse[TsAccountInfo] = new LiftHttpResponse[TsAccountInfo](response)
 
-  val accountInfo = cast[TsAccountInfo](w.create)
+    val accountInfo = cast[TsAccountInfo](w.create)
 
-  println(accountInfo)*/
+    println(accountInfo)*/
 
   /*
     val cx = cast[String](w.response)

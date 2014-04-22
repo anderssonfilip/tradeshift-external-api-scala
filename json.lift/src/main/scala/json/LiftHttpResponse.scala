@@ -29,9 +29,16 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
               //JsonParser.parse(json._2).extract[TsAccountInfo]
               buildTsAccountInfo(pair._2)
             }
-            else if (typeOf[T] =:= typeOf[List[TsDocument]]) {
+            else if (typeOf[T] =:= typeOf[List[TsDocumentInfo]]) {
               //JsonParser.parse(json._2).extract[TsAccountInfo]
               buildDocuments(pair._2)
+            }
+            else if (typeOf[T] =:= typeOf[TsConnectionDetail]) {
+              buildConnectionDetail(pair._2)
+            }
+            else if (typeOf[T] =:= typeOf[List[TsConnection]]) {
+              //JsonParser.parse(json._2).extract[TsAccountInfo]
+              buildConnections(pair._2)
             }
             else
               None
@@ -43,14 +50,43 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
     }
   }
 
-  def buildDocuments(documents: String): List[TsDocument] = {
+
+  // endpoint: network/connections/
+  def buildConnections(connections: String): List[TsConnection] = {
+    for {JField("Connection", doc) <- parse(connections)
+         JObject(o) <- doc
+         JField("ConnectionId", JString(a)) <- o
+         JField("ConnectionType", JString(b)) <- o
+         JField("FromCompanyAccountId", JString(c)) <- o
+         JField("CompanyName", JString(d)) <- o
+         JField("Country", JString(e)) <- o
+         JField("Email", JString(g)) <- o
+    } yield TsConnection(a, b, c, d, e, List(), g)
+  }
+
+
+  def buildConnectionDetail(json: String): TsConnectionDetail = {
+
+    (parse(json) transform {
+      case JField("ConnectionType", x) => JField("connectionType", x)
+      case JField("ConnectionId", x) => JField("connectionId", x)
+      case JField("CompanyName", x) => JField("companyName", x)
+      case JField("Country", x) => JField("country", x)
+      case JField("Identifiers", x) => JField("identifiers", x)
+      case JField("DispatchChannelID", x) => JField("dispatchChannelId", x)
+      case JField("Email", x) => JField("email", x)
+    }).extract[TsConnectionDetail]
+  }
+
+  // endpoint: documents/
+  def buildDocuments(documents: String): List[TsDocumentInfo] = {
 
     for {JField("Document", doc) <- parse(documents)
          JObject(o) <- doc
          JField("DocumentId", JString(documentId)) <- o
          JField("ID", JString(id)) <- o
          JField("URI", JString(uri)) <- o
-    } yield TsDocument(documentId, id, uri)
+    } yield TsDocumentInfo(documentId, id, uri)
   }
 
   def buildTsAccountInfo(accountInfo: String): TsAccountInfo = {

@@ -10,5 +10,7 @@ object HttpStatusCodes {
 
   map += (200 -> "OK")
   map += (403 -> "Forbidden")
+  map += (404 -> "Not Found")
+  map += (405 -> "Method Not Allowed")
 
 }

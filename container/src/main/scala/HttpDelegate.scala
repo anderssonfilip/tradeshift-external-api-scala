@@ -4,7 +4,7 @@ import scala.concurrent.Future
 
 abstract trait HttpDelegate {
 
-  //def doDelete(request: TSHttpRequest, clazz: Class[T]): HttpResponseWrapper[T]
+  def doDelete(request: HttpRequest): Future[Int]
 
   def doGet(request: HttpRequest): Future[(Int, String)]
 
