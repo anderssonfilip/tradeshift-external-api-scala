@@ -29,6 +29,10 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
               //JsonParser.parse(json._2).extract[TsAccountInfo]
               buildTsAccountInfo(pair._2)
             }
+            else if (typeOf[T] =:= typeOf[List[TsDocument]]) {
+              //JsonParser.parse(json._2).extract[TsAccountInfo]
+              buildDocuments(pair._2)
+            }
             else
               None
           }
@@ -37,6 +41,16 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
       }
       case None => println("Empty response")
     }
+  }
+
+  def buildDocuments(documents: String): List[TsDocument] = {
+
+    for {JField("Document", doc) <- parse(documents)
+         JObject(o) <- doc
+         JField("DocumentId", JString(documentId)) <- o
+         JField("ID", JString(id)) <- o
+         JField("URI", JString(uri)) <- o
+    } yield TsDocument(documentId, id, uri)
   }
 
   def buildTsAccountInfo(accountInfo: String): TsAccountInfo = {

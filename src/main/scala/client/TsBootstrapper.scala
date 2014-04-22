@@ -29,6 +29,19 @@ object TsBootstrapper extends App {
 
   httpDelegate.sign(consumerKey, consumerSecret, token, tokenSecret)
 
+  val req = new HttpRequest("documents")
+  req.addHeader("User-Agent", "tradesshift-external-api-scala/0.1")
+  req.addHeader("Accept", "application/json")
+  req.addHeader("X-Tradeshift-TenantId", tenantId)
+
+  val response: Future[(Int, String)] = httpDelegate.doGet(req)
+  val w= new LiftHttpResponse[List[TsDocument]](response)
+
+  val accountInfo = cast[List[TsDocument]](w.create)
+
+  println(accountInfo)
+
+/*
   val req = new HttpRequest("account/info")
   req.addHeader("User-Agent", "tradesshift-external-api-scala/0.1")
   req.addHeader("Accept", "application/json")
@@ -39,7 +52,7 @@ object TsBootstrapper extends App {
 
   val accountInfo = cast[TsAccountInfo](w.create)
 
-  println(accountInfo)
+  println(accountInfo)*/
 
   /*
     val cx = cast[String](w.response)
