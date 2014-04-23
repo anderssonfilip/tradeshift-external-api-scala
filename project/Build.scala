@@ -1,3 +1,4 @@
+import com.github.retronym.SbtOneJar
 import sbt._
 import Keys._
 
@@ -5,9 +6,16 @@ object ClientBuild extends Build {
 
   scalaVersion in ThisBuild := "2.10.4"
 
-  val typesafeConfig = "com.typesafe" % "config" % "1.2.0"
+  def standardSettings = Seq(
+    exportJars := true
+  ) ++ Defaults.defaultSettings
 
-  lazy val client = project.in(file("."))
+  val typesafeConfig = "com.typesafe" % "config" % "1.2.0" % "provided"
+
+  lazy val client = Project("client",
+    file("."),
+    settings = standardSettings ++ SbtOneJar.oneJarSettings
+  )
     .aggregate(http, json, container)
     .settings(libraryDependencies ++= Seq(typesafeConfig))
     .dependsOn(http)
