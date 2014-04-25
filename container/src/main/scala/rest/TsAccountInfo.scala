@@ -1,4 +1,4 @@
-package container
+package rest
 
 case class TsAccountInfo(companyName: String,
                          country: String,

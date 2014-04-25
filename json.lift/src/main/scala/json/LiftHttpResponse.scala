@@ -1,52 +1,65 @@
 package json
 
 import container._
+import container.HttpResponse
 import scala.concurrent.{Await, Future}
 import scala.reflect.runtime.universe._
 import net.liftweb.json._
 import java.text.SimpleDateFormat
 import scala.util.{Failure, Success}
 import scala.concurrent.duration._
+import rest._
+import rest.TsConnection
+import scala.util.Failure
+import rest.TsConnectionDetail
+import scala.Some
+import scala.util.Success
+import rest.TsAddress
+import rest.TsAccountInfo
 
 class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T]) extends HttpResponse[T](res: Future[(Int, String)]) {
-
 
   implicit val formats = new DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   }
 
-  override def create: Any = {
+  override def create: (Boolean, Any) = {
 
     Await.ready(res, Duration.Inf)
     res.value match {
       case Some(res) => {
         res match {
           case Success(pair) => {
-            if (typeOf[T] =:= typeOf[String]) {
-              pair._2
+            pair._1.toInt / 100 match {
+              case 4 => println("Received a 4xx: " + HttpStatusCodes.description(pair._1.toInt)); (false, None)
+              case 5 => println("Received a 5xx: " + HttpStatusCodes.description(pair._1.toInt)); (false, None)
+              case 2 => {
+
+                if (typeOf[T] =:= typeOf[String]) {
+                  (true, pair._2)
+                }
+                else if (typeOf[T] =:= typeOf[TsAccountInfo]) {
+                  //JsonParser.parse(json._2).extract[TsAccountInfo]
+                  (true, buildTsAccountInfo(pair._2))
+                }
+                else if (typeOf[T] =:= typeOf[List[TsDocumentInfo]]) {
+                  (true, buildDocuments(pair._2))
+                }
+                else if (typeOf[T] =:= typeOf[TsConnectionDetail]) {
+                  (true, buildConnectionDetail(pair._2))
+                }
+                else if (typeOf[T] =:= typeOf[List[TsConnection]]) {
+                  (true, buildConnections(pair._2))
+                }
+                else
+                  (true, None)
+              }
             }
-            else if (typeOf[T] =:= typeOf[TsAccountInfo]) {
-              //JsonParser.parse(json._2).extract[TsAccountInfo]
-              buildTsAccountInfo(pair._2)
-            }
-            else if (typeOf[T] =:= typeOf[List[TsDocumentInfo]]) {
-              //JsonParser.parse(json._2).extract[TsAccountInfo]
-              buildDocuments(pair._2)
-            }
-            else if (typeOf[T] =:= typeOf[TsConnectionDetail]) {
-              buildConnectionDetail(pair._2)
-            }
-            else if (typeOf[T] =:= typeOf[List[TsConnection]]) {
-              //JsonParser.parse(json._2).extract[TsAccountInfo]
-              buildConnections(pair._2)
-            }
-            else
-              None
           }
-          case Failure(f) => println(f)
+          case Failure(f) => println(f); (false, None)
         }
       }
-      case None => println("Empty response")
+      case None => println("Empty response"); (false, None)
     }
   }
 

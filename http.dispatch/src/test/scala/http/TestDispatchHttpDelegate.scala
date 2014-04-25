@@ -18,7 +18,7 @@ class TestDispatchHttpDelegate extends FlatSpec with Matchers {
   val tokenSecret = config.getString("TokenSecret")
   val tenantId = config.getString("TenantId")
 
-  "A a delete document for random documentId" should "return HTTP 404" in {
+  "A delete document for random documentId" should "return HTTP 404" in {
 
     val httpDelegate = new DispatchHttpDelegate("https://sandbox.tradeshift.com/tradeshift/rest/")
 
@@ -44,7 +44,7 @@ class TestDispatchHttpDelegate extends FlatSpec with Matchers {
   }
 
 
-  "A a delete document for valid documentId" should "return HTTP 200" in {
+  "A delete document for valid documentId" should "return HTTP 200" in {
 
     throw new NotImplementedException()
 

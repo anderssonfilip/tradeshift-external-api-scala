@@ -1,9 +1,10 @@
-import container.{TsDocumentInfo, TsAddress}
+import rest.TsDocumentInfo
 import java.text.SimpleDateFormat
 import json.LiftHttpResponse
 import org.scalatest._
 
 import net.liftweb.json._
+import rest.{TsDocumentInfo, TsAddress}
 import scala.concurrent.Future
 
 class TestLift extends FlatSpec with Matchers {

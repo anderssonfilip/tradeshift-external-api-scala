@@ -1,4 +1,4 @@
-package container
+package rest
 
 case class TsConnection(connectionId: String,
                         connectionType: String,
