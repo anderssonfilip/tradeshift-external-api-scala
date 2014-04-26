@@ -6,15 +6,15 @@ import scala.concurrent.{Await, Future}
 import scala.reflect.runtime.universe._
 import net.liftweb.json._
 import java.text.SimpleDateFormat
-import scala.util.{Failure, Success}
 import scala.concurrent.duration._
-import rest._
 import rest.TsConnection
 import scala.util.Failure
 import rest.TsConnectionDetail
 import scala.Some
+import rest.TsDispatch
 import scala.util.Success
 import rest.TsAddress
+import rest.TsDocument
 import rest.TsAccountInfo
 
 class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T]) extends HttpResponse[T](res: Future[(Int, String)]) {
@@ -42,7 +42,7 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
                   //JsonParser.parse(json._2).extract[TsAccountInfo]
                   (true, buildTsAccountInfo(pair._2))
                 }
-                else if (typeOf[T] =:= typeOf[List[TsDocumentInfo]]) {
+                else if (typeOf[T] =:= typeOf[List[TsDocument]]) {
                   (true, buildDocuments(pair._2))
                 }
                 else if (typeOf[T] =:= typeOf[TsConnectionDetail]) {
@@ -64,7 +64,7 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
   }
 
 
-  // endpoint: network/connections/
+  // endpoint: network/connections
   def buildConnections(connections: String): List[TsConnection] = {
     for {JField("Connection", doc) <- parse(connections)
          JObject(o) <- doc
@@ -78,6 +78,7 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
   }
 
 
+  // endpoint: network/conections/{connectionId}
   def buildConnectionDetail(json: String): TsConnectionDetail = {
 
     (parse(json) transform {
@@ -91,17 +92,37 @@ class LiftHttpResponse[T](res: Future[(Int, String)])(implicit man: Manifest[T])
     }).extract[TsConnectionDetail]
   }
 
-  // endpoint: documents/
-  def buildDocuments(documents: String): List[TsDocumentInfo] = {
+  // endpoint: documents
+  def buildDocuments(documents: String): List[TsDocument] = {
 
     for {JField("Document", doc) <- parse(documents)
          JObject(o) <- doc
          JField("DocumentId", JString(documentId)) <- o
          JField("ID", JString(id)) <- o
          JField("URI", JString(uri)) <- o
-    } yield TsDocumentInfo(documentId, id, uri)
+         JField("LatestDispatch", JObject(d)) <- o
+         JField("DispatchId", JString(dispatchId)) <- d
+         JField("ObjectId", JString(objectId)) <- d
+         JField("Created", created) <- d
+         JField("SenderUserId", JString(senderUserId)) <- d
+         JField("DispatchState", JString(dispatchState)) <- d
+         JField("LastStateChange", lastStateChange) <- d
+         JField("ReceiverConnectionId", JString(receiverConnectionId)) <- d
+         JField("DispatchChannel", JString(dispatchChannel)) <- d
+    }
+    yield TsDocument(documentId, id, uri, "", new java.util.Date(), "",
+      TsDispatch(dispatchId,
+        objectId,
+        created.extract[java.util.Date],
+        senderUserId,
+        dispatchState,
+        lastStateChange.extract[java.util.Date],
+        receiverConnectionId,
+        dispatchChannel
+      ))
   }
 
+  // endpoint : account/info
   def buildTsAccountInfo(accountInfo: String): TsAccountInfo = {
 
     val p = (for {

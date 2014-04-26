@@ -14,7 +14,7 @@ class DispatchHttpDelegate(base: String) extends HttpDelegate {
 
     val svc = url(base + request.path).DELETE
 
-    println((prep(svc, request)).toRequest.toString)
+    //println((prep(svc, request)).toRequest.toString)
 
     Http(prep(svc, request)).map(r => r.getStatusCode)
   }
@@ -23,7 +23,7 @@ class DispatchHttpDelegate(base: String) extends HttpDelegate {
 
     val svc = url(base + request.path).GET
 
-    println((prep(svc, request)).toRequest.toString)
+    //println((prep(svc, request)).toRequest.toString)
 
     split(Http(prep(svc, request)))
   }
